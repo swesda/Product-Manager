@@ -2,12 +2,13 @@ package ru.netology.domain;
 
 public class Product {
     private int id;
-    private String title;
+    private String name;
     private int price;
 
-    public Product(int id, String title, int price) {
+
+    public Product(int id, String name, int price) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.price = price;
     }
 
@@ -15,7 +16,7 @@ public class Product {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 }

@@ -9,45 +9,47 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductRepositoryTest {
     private ProductRepository repository = new ProductRepository();
-    private Product first = new Product(1, "Flower", 1500);
-    private Book second = new Book(2, "The night is tender", 400, "Francis Scott Fitzgerald");
-    private Smartphone third = new Smartphone(3, "Redmi Note", 15000, "Xiaomi");
+    Book book1 = new Book(1, "Beautiful and cursed", 500, "Francis Scott Fitzgerald");
+    Book book2 = new Book(2, "The night is tender", 400, "Francis Scott Fitzgerald");
+    Smartphone phone1 = new Smartphone(3, "Redmi Note", 15000, "Xiaomi");
+    Smartphone phone2 = new Smartphone(4, "Redmi Note2", 16000, "Xiaomi");
 
     @Test
-    void shouldSaveNewProductIfNot() {
-        repository.save(first);
+    public void shouldSaveNewProductIfNot() {
+        repository.save(book1);
 
-        Product[] expected = {first};
+        Product[] expected = {book1};
         Product[] actual = repository.findAll();
 
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    void shouldSaveNewProductIfIs() {
-        repository.save(first);
-        repository.save(second);
-        repository.save(third);
+    public void shouldSaveNewProductIfIs() {
+        repository.save(book1);
+        repository.save(book2);
+        repository.save(phone1);
+        repository.save(phone2);
 
-        Product[] expected = {first, second, third};
+        Product[] expected = {book1, book2, phone1, phone2};
         Product[] actual = repository.findAll();
 
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    void shouldFindAll() {
-        repository.save(first);
-        repository.save(third);
+    public void shouldFindAll() {
+        repository.save(book1);
+        repository.save(phone1);
 
-        Product[] expected = {first, third};
+        Product[] expected = {book1, phone1};
         Product[] actual = repository.findAll();
 
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    void shouldFindAllNone() {
+    public void shouldFindAllNone() {
         Product[] expected = {};
         Product[] actual = repository.findAll();
 
@@ -55,15 +57,39 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    void shouldRemoveById() {
-        repository.save(first);
-        repository.save(second);
-        repository.save(third);
+    public void shouldRemoveById() {
+        repository.save(book1);
+        repository.save(book2);
+        repository.save(phone1);
 
         repository.removeById(2);
-        Product[] expected = {first, third};
+        Product[] expected = {book1, phone1};
         Product[] actual = repository.findAll();
 
         assertArrayEquals(expected, actual);
+    }
+    @Test
+    public void shouldFindById() {
+        repository.save(book1);
+        repository.save(book2);
+        repository.save(phone1);
+        repository.save(phone2);
+
+        Product expected = book2;
+        Product actual = repository.findById(2);
+
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void shouldFindByNotId() {
+        repository.save(book1);
+        repository.save(book2);
+        repository.save(phone1);
+        repository.save(phone2);
+
+        Product expected = (null);
+        Product actual = repository.findById(5);
+
+        assertEquals(expected, actual);
     }
 }
